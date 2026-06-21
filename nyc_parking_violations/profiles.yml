@@ -9,7 +9,7 @@ nyc_parking_violations:
       schema: main
     prod:
       type: duckdb
-      path: '../data/prod_nyc_parking_violations.db'
+      path: './data/prod_nyc_parking_violations.db'
       threads: 1
       extensions: []
       schema: main
