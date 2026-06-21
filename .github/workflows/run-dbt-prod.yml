@@ -26,6 +26,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Load source data into DuckDB
+        run: |
+          mkdir -p data
+          python scripts/load_source_data.py data/prod_nyc_parking_violations.db
       - name: Run dbt Prod
         run: |
           dbt debug
