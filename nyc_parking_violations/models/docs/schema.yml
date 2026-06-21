@@ -1,0 +1,196 @@
+version: 2
+
+models:
+  - name: bronze_parking_violation_codes
+    description: Raw data representing the violation codes and their fees.
+    columns:
+      - name: violation_code
+        description: '{{ doc("violation_code")}}'
+      - name: definition
+        description: '{{ doc("definition")}}'
+      - name: manhattan_96th_st_below
+        description: '{{ doc("manhattan_96th_st_below")}}'
+      - name: all_other_areas
+        description: '{{ doc("all_other_areas") }}'
+
+  - name: bronze_parking_violations
+    description: Raw data related to parking violations in 2023, encompassing various details about each violation.
+    columns:
+      - name: summons_number
+        description: '{{ doc("summons_number") }}'
+        tests:
+          - unique
+          - not_null
+      - name: registration_state
+        description: '{{ doc("registration_state") }}'
+      - name: plate_type
+        description: The type of license plate.
+      - name: issue_date
+        description: The date when the summons was issued.
+      - name: violation_code
+        description: Code representing the specific parking violation.
+        tests:
+          - unique
+          - not_null
+      - name: vehicle_body_type
+        description: The body type of the vehicle involved in the violation.
+      - name: vehicle_make
+        description: The make or brand of the vehicle.
+        tests:
+          - generic_not_null
+      - name: issuing_agency
+        description: The agency that issued the summons.
+      - name: vehicle_expiration_date
+        description: The date when the vehicle's registration expires.
+      - name: violation_location
+        description: General location where the violation occurred.
+      - name: violation_precinct
+        description: Precinct where the violation was identified.
+      - name: issuer_precinct
+        description: Precinct of the officer or official who issued the summons.
+      - name: issuer_code
+        description: Unique code identifying the issuer.
+      - name: issuer_command
+        description: Command or unit of the issuer.
+      - name: issuer_squad
+        description: Squad detail for the issuer.
+      - name: violation_time
+        description: Time when the violation occurred.
+      - name: violation_county
+        description: County where the violation took place.
+      - name: violation_legal_code
+        description: Legal code associated with the violation.
+      - name: vehicle_color
+        description: Color of the vehicle involved in the violation.
+      - name: vehicle_year
+        description: Manufacturing year of the vehicle.
+
+  - name: silver_parking_violation_codes
+    description: This model unifies violation codes, providing a comprehensive view of violations, indicating whether they occurred on/below 96th St in Manhattan or in other areas, along with the respective fees in USD.
+    columns:
+      - name: violation_code
+        description: Code representing the specific parking violation.
+      - name: definition
+        description: Description of the violation for a respective code.
+      - name: is_manhattan_96th_st_below
+        description: A boolean value indicating whether the violation occurred in Manhattan on or below 96th Street.
+      - name: fee_usd
+        description: The fee charged for a parking violation, specified in USD. This fee varies depending on the location of the violation.
+
+  - name: silver_parking_violations
+    description: Enhanced view of parking violations, enriched with details and specific indicators such as the flag for violations in Manhattan on or below 96th Street.
+    columns:
+      - name: summons_number
+        description: Unique identifier for each summons issued for a parking violation.
+      - name: registration_state
+        description: The state where the vehicle is registered.
+      - name: plate_type
+        description: The type of license plate.
+      - name: issue_date
+        description: The date when the summons was issued.
+      - name: violation_code
+        description: Code representing the specific parking violation.
+      - name: vehicle_body_type
+        description: The body type of the vehicle involved in the violation.
+      - name: vehicle_make
+        description: The make or brand of the vehicle.
+      - name: issuing_agency
+        description: The agency that issued the summons.
+      - name: vehicle_expiration_date
+        description: The date when the vehicle's registration expires.
+      - name: violation_location
+        description: General location where the violation occurred.
+      - name: violation_precinct
+        description: Precinct where the violation was identified.
+      - name: issuer_precinct
+        description: Precinct of the officer or official who issued the summons.
+      - name: issuer_code
+        description: Unique code identifying the issuer.
+      - name: issuer_command
+        description: Command or unit of the issuer.
+      - name: issuer_squad
+        description: Squad detail for the issuer.
+      - name: violation_time
+        description: Time when the violation occurred.
+      - name: violation_county
+        description: County where the violation took place.
+      - name: violation_legal_code
+        description: Legal code associated with the violation.
+      - name: vehicle_color
+        description: Color of the vehicle involved in the violation.
+      - name: vehicle_year
+        description: Manufacturing year of the vehicle.
+      - name: is_manhattan_96th_st_below
+        description: A boolean value indicating whether the violation occurred in Manhattan on or below 96th Street, derived from the violation county.
+
+  - name: silver_violation_tickets
+    description: Consolidated information on parking violations, enriched with associated fee details.
+    columns:
+      - name: summons_number
+        description: Unique identifier for each summons issued for a parking violation.
+      - name: issue_date
+        description: The date when the summons was issued.
+      - name: violation_code
+        description: Code representing the specific parking violation.
+      - name: is_manhattan_96th_st_below
+        description: A boolean value indicating whether the violation occurred in Manhattan on or below 96th Street.
+      - name: issuing_agency
+        description: The agency that issued the summons.
+      - name: violation_location
+        description: General location where the violation occurred.
+      - name: violation_precinct
+        description: Precinct where the violation was identified.
+      - name: issuer_precinct
+        description: Precinct of the officer or official who issued the summons.
+      - name: issuer_code
+        description: Unique code identifying the issuer.
+      - name: issuer_command
+        description: Command or unit of the issuer.
+      - name: issuer_squad
+        description: Squad detail for the issuer.
+      - name: violation_time
+        description: Time when the violation occurred.
+      - name: violation_county
+        description: County where the violation took place.
+      - name: violation_legal_code
+        description: Legal code associated with the violation.
+      - name: fee_usd
+        description: The fee charged for a parking violation, specified in USD. This fee varies depending on the location of the violation.
+
+  - name: silver_violation_vehicles
+    description: Details of the vehicles involved in parking violations.
+    columns:
+      - name: summons_number
+        description: Unique identifier for each summons issued for a parking violation.
+      - name: registration_state
+        description: The state where the vehicle is registered.
+      - name: plate_type
+        description: The type of license plate.
+      - name: vehicle_body_type
+        description: The body type of the vehicle involved in the violation.
+      - name: vehicle_make
+        description: The make or brand of the vehicle.
+      - name: vehicle_expiration_date
+        description: The date when the vehicle's registration expires.
+      - name: vehicle_color
+        description: Color of the vehicle involved in the violation.
+      - name: vehicle_year
+        description: Manufacturing year of the vehicle.
+
+  - name: gold_ticket_metrics
+    description: Aggregated metrics representing the total tickets and revenue by violation code.
+    columns:
+      - name: violation_code
+        description: Code representing the specific parking violation.
+      - name: ticket_count
+        description: The total number of tickets issued for a specific violation code.
+      - name: total_revenue_usd
+        description: The total revenue accumulated from tickets, based on the violation code. This sum is represented in USD.
+
+  - name: gold_vehicles_metrics
+    description: Aggregated metrics detailing the number of tickets per registration state, excluding vehicles registered in NY.
+    columns:
+      - name: registration_state
+        description: The state where the vehicle is registered.
+      - name: ticket_count
+        description: The total number of tickets issued for vehicles registered in this state.
